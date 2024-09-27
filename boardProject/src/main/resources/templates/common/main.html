@@ -21,26 +21,28 @@
 
       <section class="content-1">
 
-        <table border="1" style="border-collapse: collapse;">
+        <table border="1" style="border-collapse: collapse;" 
+              class="list-table">
           <thead>
-            <th>회원 번호</th>
-            <th>이메일</th>
-            <th>탈퇴 상태</th>
-            <th>로그인</th>
-            <th>비밀번호 초기화</th>
-            <th>상태 변경</th>
+            <tr>
+              <th>회원 번호</th>
+              <th>이메일</th>
+              <th>탈퇴 상태</th>
+              <th>로그인</th>
+              <th>비밀번호 초기화</th>
+              <th>상태 변경</th>
+            </tr>
           </thead>
 
           <tbody id="memberList">
             <tr>
               <th>1</th>
-              <td>이메일</td>
-              <th>Y/N</th>
+              <td>member01@kh.or.kr</td>
+              <th>N</th>
               <th> <button>로그인</button> </th>
               <th> <button>비밀번호 초기화</button> </th>
               <th> <button>탈퇴 상태 변경</button> </th>
             </tr>
-
           </tbody>
 
         </table>
@@ -137,6 +139,7 @@
 
 
   <script src="/js/main.js"></script>
+
 
 </body>
 </html>
