@@ -38,17 +38,18 @@
 
   <section>
     <!-- 우측 상단 로그인 / 드롭다운 메뉴 -->
-     <div class="header-top-menu">
+    <div class="header-top-menu">
 
       <!-- 로그인 X -->
-       <th:block th:unless= "${session.loginMember}">
-        <a href="/">메인페이지</a>
+      <th:block th:unless="${session.loginMember}">
+        <a href="/">메인 페이지</a>
         |
         <a href="/member/login">로그인</a>
-       </th:block>
+      </th:block>
 
-       <!-- 로그인 O -->
-       <th:block th:if= "${session.loginMember}">
+      <!-- 로그인 O -->
+      <th:block th:if="${session.loginMember}">
+
         <label for="headerMenuToggle">
           [[${session.loginMember.memberNickname}]]
 
@@ -58,13 +59,13 @@
         <input type="checkbox" id="headerMenuToggle">
 
         <div class="header-menu">
-          <a href="/myPage/info">내정보</a>
+          <a href="#">내정보</a>
           <a href="/member/logout">로그아웃</a>
         </div>
 
-       </th:block>
-     
-      </div>
+      </th:block>
+
+    </div>
   </section>
 
 
@@ -75,14 +76,15 @@
 <nav>
   <ul>
     <li>
-      <a href="#">공지사항</a>
+      <a href="/board/1">공지사항</a>
     </li>
     <li>
-      <a href="#">자유 게시판</a>
+      <a href="/board/2">자유 게시판</a>
     </li>
     <li>
-      <a href="#">질문 게시판</a>
+      <a href="/board/3">정보 게시판</a>
     </li>
+
     <li>
       <a href="/fileUpload/main">파일 업로드 연습</a>
     </li>
