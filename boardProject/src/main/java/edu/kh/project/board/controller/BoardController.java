@@ -38,6 +38,9 @@ public class BoardController {
 
 	private final BoardService service;
 	
+	// 수정 시 상세 조회 서비스 호출을 위한 객체 의존성 주입
+	private final BoardService boardService;
+	
 	/** 게시글 목록 조회
 	 * @param boardCode : 게시판 종류 번호
 	 * @param cp : 현재 조회하려는 목록의 페이지 번호
@@ -260,6 +263,47 @@ public class BoardController {
 		return service.boardLike(boardNo, memberNo);
 	}
 	
+	
+	/** 게시글 수정 화면 전환
+	 * @param boardCode : 게시판 종류
+	 * @param boardNo : 수정할 게시글 번호
+	 * @param loginMember : 로그인한 회원 정보(session)
+	 * @param ra : redirect 시 request scope로 데이터 전달
+	 * @param model : forward 시 request scope로 데이터 전달
+	 */
+	@PostMapping("{boardCode}/{boardNo}/updateView")
+	public String updateView(
+		@PathVariable("boardCode") int boardCode,
+		@PathVariable("boardNo") int boardNo,
+		@SessionAttribute("loginMember") Member loginMember,
+		RedirectAttributes ra,
+		Model model) {
+		
+		// boardCode, boardNo가 일치하는 글 조회
+		Map<String , Integer> map =
+				Map.of("boardCode", boardCode, "boardNo", boardNo);
+		
+		Board board = boardService.selectDetail(map);
+		
+		// 게시글이 존재하지 않는 경우
+		if(board == null) {
+			ra.addFlashAttribute("message","해당 게시글이 존재하지 않습니다.");
+			return "redirect:/board/" + boardCode; // 게시글 목록
+		}
+		
+		// 게시글 작성자가 로그인한 회원이 아닌 경우
+		if(board.getMemberNo() != loginMember.getMemberNo()) {
+			ra.addFlashAttribute("message",	"글 작성자만 수정 가능합니다.");
+			
+			return String.format("redirect:/board/%d/%d"
+									, boardCode, boardNo); // 상세 조회
+		}
+		
+		//  게시글이 존재하고 로그인한 회원이 작성한 글이 맞을 경우 수정 화면으로 forward
+		model.addAttribute("board", board);
+		return "board/boardUpdate";
+		
+	}
 	
 	
 }
