@@ -44,28 +44,29 @@ public interface BoardMapper {
 	 * @param memberNo
 	 * @return result
 	 */
-	int checkBoardLike(@Param("boardNo") int boardNo, 
-					   @Param("memberNo") int memberNo);
+	int checkBoardLike(@Param("boardNo")  int boardNo, 
+										 @Param("memberNo") int memberNo);
 
-	/** 좋아요 테이블에 삽입 
-	 * @param boardNo
-	 * @param memberNo
-	 * @return
-	 */
-	int insertBoardLike(@Param("boardNo") int boardNo, 
-			   			@Param("memberNo") int memberNo);
 	
-	/** 좋아요 테이블에서 삭제 
+	/** 좋아요 테이블에 삽입
 	 * @param boardNo
 	 * @param memberNo
 	 * @return
 	 */
-	int deleteBoardLike(@Param("boardNo") int boardNo, 
-   						@Param("memberNo") int memberNo);
+	int insertBoardLike(@Param("boardNo")  int boardNo, 
+			 							  @Param("memberNo") int memberNo);
+
+	/** 좋아요 테이블에서 삭제
+	 * @param boardNo
+	 * @param memberNo
+	 * @return
+	 */
+	int deleteBoardLike(@Param("boardNo")  int boardNo, 
+			 							  @Param("memberNo") int memberNo);
 
 	/** 좋아요 개수 조회
 	 * @param boardNo
-	 * @return
+	 * @return count
 	 */
 	int getLikeCount(int boardNo);
 
@@ -74,11 +75,36 @@ public interface BoardMapper {
 	 */
 	List<Map<String, String>> selectBoardTypeList();
 
-	
 	/** 댓글 목록 조회
 	 * @param boardNo
 	 * @return commentList
 	 */
 	List<Comment> selectCommentList(int boardNo);
+
+	/** 검색 조건이 맞는 게시글 수 조회
+	 * @param paramMap(key, query, boardCode)
+	 * @return count
+	 */
+	int getSearchCount(Map<String, Object> paramMap);
+
+	/** 검색 목록 조회
+	 * @param paramMap
+	 * @param rowBounds
+	 * @return boardList
+	 */
+	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+
+	/** 현재 게시글이 속해있는 페이지 조회
+	 * @param boardCode
+	 * @param boardNo
+	 * @param limit
+	 * @return cp
+	 */
+	int getCurrentPage(Map<String, Object> paramMap);
+	
+	
+	
+	
+	
 
 }

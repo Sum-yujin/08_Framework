@@ -201,34 +201,30 @@ const showUpdateComment = (btn) => {
 
   /* 댓글 수정 화면이 1개만 열려 있을 수 있게 하기 */
   // == 이미 열려있는 수정 화면이 있으면 닫아버리기
-
   const temp = document.querySelector(".update-textarea");
 
   if(temp != null){ // 이미 열려있는 수정 화면이 있을 경우
 
-    if(confirm("수정 중인 댓글이 있습니다." + "현재 댓글을 수정 하시겠습니까?") === true){
-
+    if(confirm("수정 중인 댓글이 있습니다. " 
+              + "현재 댓글을 수정 하시겠습니까?") === true){
+                
       const commentRow = temp.parentElement; // 열려있는 댓글 행
       commentRow.after(beforeCommentRow); // 백업본을 다음 요소로 추가
       commentRow.remove(); // 열려있던 행 삭제
-    
+      
       // 백업본 버튼에 이벤트 추가
-
-      const childCommentBtn = beforeCommentRow.querySelector(".child-comment-btn");
+      const childeCommentBtn = beforeCommentRow.querySelector(".child-comment-btn");
       const updateCommentBtn = beforeCommentRow.querySelector(".update-comment-btn");
       const deleteCommentBtn = beforeCommentRow.querySelector(".delete-comment-btn");
 
-      childCommentBtn.addEventListener("click", () => showChildComment(childCommentBtn));
+      childeCommentBtn.addEventListener("click", () => showChildComment(childeCommentBtn));
       updateCommentBtn.addEventListener("click", () => showUpdateComment(updateCommentBtn));
       deleteCommentBtn.addEventListener("click", () => deleteComment(deleteCommentBtn));
-
-    } else {
+    
+    } else{
       return;
     }
-
-
   }
-
 
 
 
@@ -266,6 +262,40 @@ const showUpdateComment = (btn) => {
   // 8. 수정 버튼 생성
   const updateBtn = document.createElement("button");
   updateBtn.innerText = "수정";
+
+  // 수정 버튼 클릭 시 댓글 수정 (ajax)
+  updateBtn.addEventListener("click", () => {
+    const data = {
+      "commentNo" : commentNo,
+      "commentContent" : textarea.value
+    }
+
+    fetch("/comment", {
+      method : "PUT",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify(data)
+    })
+    .then(response => {
+      if(response.ok) return response.text();
+      throw new Error("댓글 수정 실패");
+    })
+    .then(result => {
+      if(result > 0){
+        alert("댓글이 수정 되었습니다");
+        selectCommentList(); // 댓글 목록 비동기 조회
+
+      } else {
+        alert("댓글 수정 실패");
+      }
+    })
+    .catch(err => console.error(err));
+
+
+  })
+
+
+
+
 
 
   // 9. 취소 버튼 생성
@@ -394,14 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventDeleteComment(); // 삭제 버튼에 이벤트 추가
   addEventUpdateComment(); // 수정 버튼에 이벤트 추가
 });
-
-
-
-
-
-
-
-
 
 
 

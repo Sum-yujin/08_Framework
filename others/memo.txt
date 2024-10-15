@@ -45,3 +45,67 @@
   -> file이 "선택된 파일 없음" 제출
   -> DB에서 해당 이미지 삭제(DELETE)
 
+
+
+[ 목록으로 버튼 동작 ]
+
+- /board/{board}
+
+- {boardCode}가 일치하는 게시글 
+  + 삭제되지 않은 게시글 중
+  현재 게시글이 몇 번째 게시글인지 구해서
+  돌아가야 되는 페이지 번호 cp 구하기
+
+
+  //-------------------------------------------------
+
+  @RequestParam ( 제출된 객체)
+  form/QueryString/ajax-
+  @ModelAttribute (  )
+  @RequestBody 
+  ajax - POST/PUT/DELETE
+  @ResponseBody
+  응답 시 사용
+
+
+
+  js에서 ``( 백팁) =>  String 텍스쳐
+
+//--------------------------------------------
+
+예외 처리
+
+[이유]
+-> 프로그램의 비정상 종료를 막기 위해서
+
+ - throws : 메서드에 발생한 예외를 호출부로 던짐
+ - try-catch : try 내에서 발생한 예외를 catch에서 잡아서 처리
+
+
+* 기본적으로 Spring에서
+  발생하는 대부분의 예외를 한 번에 처리하여
+  에러 페이지롤 넘어가게하는 ErrorController를 제공함
+
+
+[목표]
+1. 예외 처리 범위를 확장
+  - Controller 범위(@ExceptionHandler)
+  - 전역(@ControllerAdvice + ErrorController 상속)
+
+2. 예외 처리 페이지 변경
+
+-- 별도의 설정 없이
+  templates/error/응답코드.html 파일만 있어도
+  (응답코드 == 400, 404, 500 등)
+
+  Spring에 내장된 ErrorController가
+  발생하는 응답 코드와 같은 html 파일로 forward함
+
+
+  ControllerAdvice의 Advice 
+      => 에러가 발생 시 중간에 해당 내용을 끼워 넣겠다
+      
+// -------------------------------------------------------------
+
+
+  - th:utext => html 기호도 인식되게 하겠다
