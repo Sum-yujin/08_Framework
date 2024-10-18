@@ -521,7 +521,7 @@ header>section:nth-child(3) {
 
 /* 읽지 않은 알림이 존재하는 경우 */
 .notification-btn.fa-solid{
-  color: yellow;
+  color: black;
   text-shadow: 1px 1px 3px gray, 2px 2px 5px black;
 }
 
