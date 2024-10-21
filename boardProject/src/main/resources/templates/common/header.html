@@ -37,8 +37,7 @@
 
 
   <section>
-
-    <!-- 알림 영역 -->
+    
     <!-- 알림 영역 -->
     <div class="notification-container" th:if="${session.loginMember}">
 
@@ -55,6 +54,9 @@
       </ul>
       
     </div>
+
+
+
 
 
     <!-- 우측 상단 로그인 / 드롭다운 메뉴 -->
@@ -91,20 +93,22 @@
 
 </header>
 
-
 <!-- navigator -->
 <nav>
   <ul>
     <li th:each="boardType : ${application.boardTypeList}">
       <a th:href="@{/board/{boardCode} (boardCode = ${boardType.boardCode})}"
-          th:text="${boardType.boardName}"
-          th:classappend ="${boardType.boardName} == ${boardName}? current-board : ''"
-          >게시판 이름</a>
+         th:text="${boardType.boardName}"
+         th:classappend="${boardType.boardName} == ${boardName} ? current-board : ''"
+         >게시판 이름</a>
     </li>
-   
 
     <li>
       <a href="/fileUpload/main">파일 업로드 연습</a>
+    </li>
+
+    <li th:if="${session.loginMember}">
+      <a href="/chatting">채팅</a>
     </li>
   </ul>
 </nav>
